@@ -8,7 +8,7 @@ services:
     depends_on:
       - influxdb
     extra_hosts:
-      - "plenticore.local:10.7.77.10"
+      - plenticore.local:192.168.1.156
     restart: always
     mem_limit: 100M
 
@@ -28,8 +28,8 @@ services:
       - INFLUXDB_ADMIN_PASSWORD=secret
       - INFLUXDB_DB=telegraf
     volumes:
-      - "influx-data:/var/lib/influxdb:rw"
-      - "influx-config:/etc/influxdb:rw"
+      - /volume1/docker/kostal/kostal_influx-data:/var/lib/influxdb:rw
+      - /volume1/docker/kostal/kostal_influx-config:/etc/influxdb:rw
     restart: always
     mem_limit: 500M
 
@@ -42,7 +42,7 @@ services:
     depends_on:
       - influxdb
     volumes:
-      - "grafana:/var/lib/grafana:rw"
+      - /volume1/docker/kostal/kostal_grafana:/var/lib/grafana:rw
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=secret
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -50,8 +50,3 @@ services:
       - INFLUXDB_ADMIN_PASSWORD=secret
     restart: always
     mem_limit: 500M
-
-volumes:
-  grafana:
-  influx-data:
-  influx-config:
